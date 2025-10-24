@@ -14,11 +14,19 @@
   --glass-bg:rgba(255,255,255,0.25);
 }
 
-/* Smooth boot animation */
-@keyframes bootIn {
-  0% {opacity:0; transform:translateY(40px) scale(0.95);}
-  60% {opacity:1; transform:translateY(-5px) scale(1.02);}
-  100% {transform:translateY(0) scale(1);}
+/* Smooth boot animation for login box */
+@keyframes popZoom {
+  0% { transform: scale(0.6); opacity:0; }
+  50% { transform: scale(1.2); opacity:1; }
+  70% { transform: scale(0.95); }
+  85% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Orbiting light */
+@keyframes lightOrbit {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(280px); opacity:1; }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(280px); opacity:0; }
 }
 
 body {
@@ -32,7 +40,6 @@ body {
   justify-content:center;
   flex-direction:column;
   overflow-x:hidden;
-  animation:bootIn 1s ease;
 }
 
 .glass {
@@ -47,6 +54,25 @@ body {
   max-width:600px;
   text-align:center;
   transition:all 0.4s ease;
+  position: relative;
+}
+
+#loginBox {
+  animation: popZoom 1s forwards;
+}
+
+.orbit-light {
+  position: absolute;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.5);
+  box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 20px rgba(0,0,0,0.15);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg) translateX(280px);
+  transform-origin: center -280px;
+  animation: lightOrbit 1.5s forwards;
 }
 
 h1 {
@@ -109,6 +135,7 @@ select {
 <body>
 
 <div class="glass" id="loginBox">
+  <div class="orbit-light"></div>
   <h1>Pasaulinukai Lietuva</h1>
   <p>Įveskite administratoriaus kodą:</p>
   <input type="password" id="adminCode" placeholder="****" maxlength="8">
