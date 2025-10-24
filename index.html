@@ -5,130 +5,208 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pasaulinukai Administratoriaus prieiga</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
+:root {
+  --accent1:#007aff;
+  --accent2:#00c6ff;
+  --bg1:#b9fbc0;
+  --bg2:#a3d5ff;
+  --text:#111;
+  --glass-bg:rgba(255,255,255,0.25);
+}
+
+body {
+  margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background:radial-gradient(circle at top center,#b9fbc0,#a3d5ff);
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:#111;overflow-x:hidden;
+  background:radial-gradient(circle at top center,var(--bg1),var(--bg2));
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  overflow-x:hidden;
 }
-.glass{
-  background:rgba(255,255,255,0.25);
-  border-radius:28px;
-  padding:40px 50px;
-  backdrop-filter:blur(25px)saturate(180%);
-  -webkit-backdrop-filter:blur(25px)saturate(180%);
+
+.glass {
+  background:var(--glass-bg);
+  border-radius:24px;
+  padding:36px;
+  backdrop-filter:blur(20px)saturate(180%);
+  -webkit-backdrop-filter:blur(20px)saturate(180%);
   border:1px solid rgba(255,255,255,0.3);
-  box-shadow:0 12px 40px rgba(0,0,0,0.25),
-             inset 0 0 40px rgba(255,255,255,0.05),
-             0 0 80px rgba(255,255,255,0.2);
-  width:90%;max-width:600px;text-align:center;
-  transform:translateY(10px);animation:floaty 6s ease-in-out infinite;
+  box-shadow:0 12px 40px rgba(0,0,0,0.25);
+  width:90%;
+  max-width:600px;
+  text-align:center;
+  transition:all 0.4s ease;
 }
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-h1{font-size:2rem;font-weight:700;background:linear-gradient(90deg,#007aff,#00c6ff,#7b61ff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;}
-input{padding:12px 16px;border-radius:12px;border:none;outline:none;width:100%;max-width:200px;
-  text-align:center;font-size:1.1rem;margin-bottom:15px;}
-button{
+
+h1 {
+  font-size:2rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+input {
+  padding:10px 14px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:1.1rem;
+  text-align:center;
+  width:70%;
+  max-width:200px;
+  margin-top:10px;
+}
+
+button {
   cursor:pointer;
-  background:linear-gradient(90deg,#7bafff,#a3d5ff);
-  color:#fff;font-weight:600;padding:12px 24px;border:none;border-radius:12px;
+  margin-top:14px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  color:#fff;
+  font-weight:600;
+  padding:10px 24px;
+  border:none;
+  border-radius:12px;
   transition:transform 0.2s ease,box-shadow 0.3s ease;
 }
-button:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(123,175,255,0.5);}
-.warning{
+button:hover {transform:scale(1.05);}
+
+.warning {
   margin:10px auto;
   background:rgba(255,255,255,0.3);
-  border:1px solid rgba(255,255,255,0.4);
   border-radius:12px;
-  padding:10px 15px;
+  padding:10px;
   color:#222;
-  width:100%;
-  max-width:450px;
+  max-width:420px;
+  border:1px solid rgba(255,255,255,0.3);
 }
-.contact{margin-top:25px;font-size:0.95rem;color:#222;}
-.contact p{margin:4px 0;}
-footer{font-size:0.85rem;opacity:0.85;margin-top:20px;}
-.draggable {
-  cursor: move;
-  outline: 2px dashed rgba(0,0,0,0.2);
+
+.contact {margin-top:20px;font-size:0.95rem;}
+footer {font-size:0.85rem;margin-top:10px;opacity:0.8;}
+
+.hidden {display:none;}
+.fade {animation:fadein 0.6s ease;}
+@keyframes fadein {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+select {
+  margin-top:10px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  background:#fff;
+  font-weight:600;
 }
 </style>
 </head>
 <body>
 
-<div class="glass" id="loginBox">
+<div class="glass fade" id="loginBox">
   <h1>Pasaulinukai Lietuva</h1>
-  <p>Įveskite administratoriaus arba svečio kodą:</p>
+  <p>Įveskite administratoriaus kodą:</p>
   <input type="password" id="adminCode" placeholder="****" maxlength="8">
   <br>
-  <button id="continueBtn">Tęsti</button>
-  <p id="msg" style="margin-top:10px;color:red;"></p>
+  <button id="loginBtn">Tęsti</button>
+  <p id="msg" style="color:red;margin-top:10px;"></p>
 </div>
 
-<div class="glass" id="continueBox" style="display:none;">
-  <h1 id="adminWelcome">Pasaulinukai Admin</h1>
-  <div class="warning">⚠️ Šis puslapis nukreips jus į Google Forms.</div>
-  <div class="warning">⚠️ Tai tik prototipas, prašome nešvaistyti savo laiko.</div>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
-    <button class="draggable">Tęsti</button>
-  </a>
-  <div class="contact draggable">
+<div class="glass fade hidden" id="contentBox">
+  <h1 id="roleTitle">Pasaulinukai</h1>
+  <p id="welcomeText"></p>
+
+  <div id="adminExtras" class="hidden">
+    <p><strong>Prototipo zona:</strong> čia bus administratoriaus priėjimas prie vidinių formų.</p>
+    <label for="themeSelect">Pasirinkite temą:</label><br>
+    <select id="themeSelect">
+      <option value="liquid">Liquid Glass</option>
+      <option value="neon">Neon Blue</option>
+      <option value="fab">Fabulous</option>
+    </select>
+  </div>
+
+  <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
+
+  <div class="contact">
     <p><strong>CEO:</strong> 0(608)79 821</p>
     <p><strong>El. paštas:</strong> pasaulinukai@gmail.com</p>
     <p><strong>Technologijos (CTO):</strong> —</p>
   </div>
-  <footer><p>All rights reserved Pasaulinukai 2025</p></footer>
+  <footer>All rights reserved Pasaulinukai 2025</footer>
 </div>
 
 <script>
 (function(){
-  const codes = { admin: "4072", guest: "0124" };
-  const input = document.getElementById("adminCode");
-  const msg = document.getElementById("msg");
+  const adminCode = "4072";
+  const userCode = "0124";
+
   const loginBox = document.getElementById("loginBox");
-  const continueBox = document.getElementById("continueBox");
-  const adminWelcome = document.getElementById("adminWelcome");
-  const btn = document.getElementById("continueBtn");
+  const contentBox = document.getElementById("contentBox");
+  const msg = document.getElementById("msg");
+  const themeSelect = document.getElementById("themeSelect");
+  const adminExtras = document.getElementById("adminExtras");
+  const welcomeText = document.getElementById("welcomeText");
+  const roleTitle = document.getElementById("roleTitle");
 
-  function makeDraggable(element){
-    let offsetX, offsetY, isDragging = false;
+  document.getElementById("loginBtn").addEventListener("click", checkCode);
+  document.getElementById("adminCode").addEventListener("keydown", e=>{
+    if(e.key==="Enter") checkCode();
+  });
 
-    element.addEventListener('mousedown', e => {
-      isDragging = true;
-      offsetX = e.clientX - element.offsetLeft;
-      offsetY = e.clientY - element.offsetTop;
-      element.style.position = 'absolute';
-    });
-    document.addEventListener('mousemove', e => {
-      if(!isDragging) return;
-      element.style.left = (e.clientX - offsetX) + 'px';
-      element.style.top = (e.clientY - offsetY) + 'px';
-    });
-    document.addEventListener('mouseup', () => isDragging = false);
+  function checkCode(){
+    const code = document.getElementById("adminCode").value.trim();
+    if(code===adminCode){
+      showAdmin();
+    } else if(code===userCode){
+      showUser();
+    } else {
+      msg.textContent="Neteisingas kodas.";
+    }
   }
 
-  btn.addEventListener('click', ()=>{
-    const code = input.value.trim();
-    if(code === codes.admin){
-      msg.textContent = "";
-      loginBox.style.display = "none";
-      continueBox.style.display = "block";
-      adminWelcome.textContent = "Sveiki sugrįžę, administratoriau!";
-      // make draggable elements editable
-      document.querySelectorAll(".draggable").forEach(makeDraggable);
-    } else if(code === codes.guest){
-      msg.textContent = "";
-      loginBox.style.display = "none";
-      continueBox.style.display = "block";
-      adminWelcome.textContent = "Sveiki atvykę!";
-    } else {
-      msg.textContent = "Neteisingas kodas.";
+  function showAdmin(){
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
+    adminExtras.classList.remove("hidden");
+    welcomeText.textContent="Sveiki, administratori!";
+    roleTitle.textContent="Administratoriaus prieiga";
+
+    themeSelect.addEventListener("change", e=>{
+      setTheme(e.target.value);
+    });
+  }
+
+  function showUser(){
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
+    adminExtras.classList.add("hidden");
+    welcomeText.textContent="Sveiki atvykę!";
+    roleTitle.textContent="Pasaulinukai Lietuva";
+  }
+
+  function setTheme(name){
+    const root=document.documentElement;
+    if(name==="liquid"){
+      root.style.setProperty("--bg1","#b9fbc0");
+      root.style.setProperty("--bg2","#a3d5ff");
+      root.style.setProperty("--accent1","#007aff");
+      root.style.setProperty("--accent2","#00c6ff");
     }
-  });
+    if(name==="neon"){
+      root.style.setProperty("--bg1","#0f0f1f");
+      root.style.setProperty("--bg2","#001133");
+      root.style.setProperty("--accent1","#00ffff");
+      root.style.setProperty("--accent2","#0088ff");
+    }
+    if(name==="fab"){
+      root.style.setProperty("--bg1","#fff0f6");
+      root.style.setProperty("--bg2","#ffe4f0");
+      root.style.setProperty("--accent1","#ff4fc3");
+      root.style.setProperty("--accent2","#ff82ff");
+    }
+  }
 })();
 </script>
-
 </body>
 </html>
