@@ -50,27 +50,31 @@ button:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(123,175,255,0.5);}
 .contact{margin-top:25px;font-size:0.95rem;color:#222;}
 .contact p{margin:4px 0;}
 footer{font-size:0.85rem;opacity:0.85;margin-top:20px;}
+.draggable {
+  cursor: move;
+  outline: 2px dashed rgba(0,0,0,0.2);
+}
 </style>
 </head>
 <body>
 
 <div class="glass" id="loginBox">
   <h1>Pasaulinukai Lietuva</h1>
-  <p>Įveskite administratoriaus kodą:</p>
+  <p>Įveskite administratoriaus arba svečio kodą:</p>
   <input type="password" id="adminCode" placeholder="****" maxlength="8">
   <br>
-  <button onclick="checkCode()">Tęsti</button>
+  <button id="continueBtn">Tęsti</button>
   <p id="msg" style="margin-top:10px;color:red;"></p>
 </div>
 
 <div class="glass" id="continueBox" style="display:none;">
-  <h1>Pasaulinukai Admin</h1>
+  <h1 id="adminWelcome">Pasaulinukai Admin</h1>
   <div class="warning">⚠️ Šis puslapis nukreips jus į Google Forms.</div>
   <div class="warning">⚠️ Tai tik prototipas, prašome nešvaistyti savo laiko.</div>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
-    <button>Tęsti</button>
+    <button class="draggable">Tęsti</button>
   </a>
-  <div class="contact">
+  <div class="contact draggable">
     <p><strong>CEO:</strong> 0(608)79 821</p>
     <p><strong>El. paštas:</strong> pasaulinukai@gmail.com</p>
     <p><strong>Technologijos (CTO):</strong> —</p>
@@ -80,27 +84,49 @@ footer{font-size:0.85rem;opacity:0.85;margin-top:20px;}
 
 <script>
 (function(){
-  // hidden secret as char codes (not plaintext)
-  const secretCodes = [52,48,55,50]; // "4072"
-  function secretString(){ return secretCodes.map(c => String.fromCharCode(c)).join(''); }
+  const codes = { admin: "4072", guest: "0124" };
+  const input = document.getElementById("adminCode");
+  const msg = document.getElementById("msg");
+  const loginBox = document.getElementById("loginBox");
+  const continueBox = document.getElementById("continueBox");
+  const adminWelcome = document.getElementById("adminWelcome");
+  const btn = document.getElementById("continueBtn");
 
-  function checkCode(){
-    const code = document.getElementById("adminCode").value.trim();
-    const msg = document.getElementById("msg");
-    if(code === secretString()){
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("continueBox").style.display = "block";
+  function makeDraggable(element){
+    let offsetX, offsetY, isDragging = false;
+
+    element.addEventListener('mousedown', e => {
+      isDragging = true;
+      offsetX = e.clientX - element.offsetLeft;
+      offsetY = e.clientY - element.offsetTop;
+      element.style.position = 'absolute';
+    });
+    document.addEventListener('mousemove', e => {
+      if(!isDragging) return;
+      element.style.left = (e.clientX - offsetX) + 'px';
+      element.style.top = (e.clientY - offsetY) + 'px';
+    });
+    document.addEventListener('mouseup', () => isDragging = false);
+  }
+
+  btn.addEventListener('click', ()=>{
+    const code = input.value.trim();
+    if(code === codes.admin){
       msg.textContent = "";
+      loginBox.style.display = "none";
+      continueBox.style.display = "block";
+      adminWelcome.textContent = "Sveiki sugrįžę, administratoriau!";
+      // make draggable elements editable
+      document.querySelectorAll(".draggable").forEach(makeDraggable);
+    } else if(code === codes.guest){
+      msg.textContent = "";
+      loginBox.style.display = "none";
+      continueBox.style.display = "block";
+      adminWelcome.textContent = "Sveiki atvykę!";
     } else {
       msg.textContent = "Neteisingas kodas.";
     }
-  }
-
-  // expose for onclick handler
-  window.checkCode = checkCode;
-
-  // focus input on load
-  window.addEventListener('load', ()=>{ const inp = document.getElementById('adminCode'); if(inp) inp.focus(); });
+  });
 })();
 </script>
 
