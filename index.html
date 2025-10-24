@@ -14,10 +14,17 @@
   --glass-bg:rgba(255,255,255,0.25);
 }
 
+/* Smooth boot animation */
+@keyframes bootIn {
+  0% {opacity:0; transform:translateY(40px) scale(0.95);}
+  60% {opacity:1; transform:translateY(-5px) scale(1.02);}
+  100% {transform:translateY(0) scale(1);}
+}
+
 body {
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background:radial-gradient(circle at top center,var(--bg1),var(--bg2));
+  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
   color:var(--text);
   min-height:100vh;
   display:flex;
@@ -25,14 +32,15 @@ body {
   justify-content:center;
   flex-direction:column;
   overflow-x:hidden;
+  animation:bootIn 1s ease;
 }
 
 .glass {
   background:var(--glass-bg);
   border-radius:24px;
-  padding:36px;
-  backdrop-filter:blur(20px)saturate(180%);
-  -webkit-backdrop-filter:blur(20px)saturate(180%);
+  padding:40px;
+  backdrop-filter:blur(25px)saturate(180%);
+  -webkit-backdrop-filter:blur(25px)saturate(180%);
   border:1px solid rgba(255,255,255,0.3);
   box-shadow:0 12px 40px rgba(0,0,0,0.25);
   width:90%;
@@ -86,10 +94,7 @@ button:hover {transform:scale(1.05);}
 
 .contact {margin-top:20px;font-size:0.95rem;}
 footer {font-size:0.85rem;margin-top:10px;opacity:0.8;}
-
 .hidden {display:none;}
-.fade {animation:fadein 0.6s ease;}
-@keyframes fadein {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
 select {
   margin-top:10px;
@@ -103,7 +108,7 @@ select {
 </head>
 <body>
 
-<div class="glass fade" id="loginBox">
+<div class="glass" id="loginBox">
   <h1>Pasaulinukai Lietuva</h1>
   <p>Įveskite administratoriaus kodą:</p>
   <input type="password" id="adminCode" placeholder="****" maxlength="8">
@@ -112,12 +117,11 @@ select {
   <p id="msg" style="color:red;margin-top:10px;"></p>
 </div>
 
-<div class="glass fade hidden" id="contentBox">
+<div class="glass hidden" id="contentBox">
   <h1 id="roleTitle">Pasaulinukai</h1>
   <p id="welcomeText"></p>
 
   <div id="adminExtras" class="hidden">
-    <p><strong>Prototipo zona:</strong> čia bus administratoriaus priėjimas prie vidinių formų.</p>
     <label for="themeSelect">Pasirinkite temą:</label><br>
     <select id="themeSelect">
       <option value="liquid">Liquid Glass</option>
@@ -125,6 +129,12 @@ select {
       <option value="fab">Fabulous</option>
     </select>
   </div>
+
+  <br>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header"
+     target="_blank" rel="noopener">
+     <button id="formBtn">Atidaryti „Google Forms“</button>
+  </a>
 
   <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
 
@@ -171,10 +181,7 @@ select {
     adminExtras.classList.remove("hidden");
     welcomeText.textContent="Sveiki, administratori!";
     roleTitle.textContent="Administratoriaus prieiga";
-
-    themeSelect.addEventListener("change", e=>{
-      setTheme(e.target.value);
-    });
+    themeSelect.addEventListener("change", e=>setTheme(e.target.value));
   }
 
   function showUser(){
@@ -201,12 +208,13 @@ select {
     }
     if(name==="fab"){
       root.style.setProperty("--bg1","#fff0f6");
-      root.style.setProperty("--bg2","#ffe4f0");
-      root.style.setProperty("--accent1","#ff4fc3");
-      root.style.setProperty("--accent2","#ff82ff");
+      root.style.setProperty("--bg2","#fcd2f0");
+      root.style.setProperty("--accent1","#ff007f");
+      root.style.setProperty("--accent2","#ff77ff");
     }
   }
 })();
 </script>
+
 </body>
 </html>
