@@ -101,8 +101,25 @@ button {
   border:none;
   border-radius:12px;
   transition:transform 0.2s ease,box-shadow 0.3s ease;
+  position:relative;
+  overflow:hidden;
 }
 button:hover { transform:scale(1.05); }
+button:active::after {
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:300%;
+  height:300%;
+  background:rgba(255,255,255,0.3);
+  transform:translate(-50%,-50%) scale(0);
+  border-radius:50%;
+  animation:ripple 0.5s linear;
+}
+@keyframes ripple {
+  to { transform:translate(-50%,-50%) scale(1); opacity:0; }
+}
 
 .warning {
   margin:10px auto;
@@ -130,33 +147,42 @@ select {
 </head>
 <body>
 
-<div class="glass" id="loginBox" aria-labelledby="title-login">
-  <div class="orbit-light" aria-hidden="true"></div>
-  <h1 id="title-login">Pasaulinukai Lietuva</h1>
+<div class="glass" id="loginBox">
+  <div class="orbit-light"></div>
+  <h1>Pasaulinukai Lietuva</h1>
   <p>Įveskite administratoriaus kodą:</p>
-  <input type="password" id="adminCode" placeholder="****" maxlength="8" aria-label="Administratoriaus kodas">
+  <input type="password" id="adminCode" placeholder="****" maxlength="8">
   <br>
-  <button id="loginBtn" type="button">Tęsti</button>
-  <p id="msg" style="color:red;margin-top:10px;" role="status" aria-live="polite"></p>
+  <button id="loginBtn">Tęsti</button>
+  <p id="msg" style="color:red;margin-top:10px;"></p>
 </div>
 
-<div class="glass hidden" id="contentBox" aria-hidden="true">
+<div class="glass hidden" id="contentBox">
   <h1 id="roleTitle">Pasaulinukai</h1>
   <p id="welcomeText"></p>
 
   <div id="adminExtras" class="hidden">
     <label for="themeSelect">Pasirinkite temą:</label><br>
-    <select id="themeSelect" aria-label="Pasirinkite temą">
+    <select id="themeSelect">
       <option value="liquid">Liquid Glass</option>
       <option value="neon">Neon Blue</option>
       <option value="fab">Fabulous</option>
     </select>
+    <div id="colorSelectContainer" class="hidden">
+      <br><label for="colorSelect">Pasirinkite spalvą:</label><br>
+      <select id="colorSelect">
+        <option value="blue">Mėlyna</option>
+        <option value="green">Žalia</option>
+        <option value="red">Raudona</option>
+        <option value="pink">Rožinė</option>
+      </select>
+    </div>
   </div>
 
   <br>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header"
      target="_blank" rel="noopener">
-     <button id="formBtn" type="button">Atidaryti „Google Forms“</button>
+     <button id="formBtn">Atidaryti „Google Forms“</button>
   </a>
 
   <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
@@ -171,95 +197,99 @@ select {
 
 <script>
 (function(){
-  const KEY = 23;
-  const ADMIN_ENC = [35,39,32,37];
-  const USER_ENC  = [39,38,37,35];
-
-  function decode(arr){
-    return arr.map(n => String.fromCharCode(n ^ KEY)).join('');
-  }
-
-  const adminCodeStr = decode(ADMIN_ENC);
-  const userCodeStr  = decode(USER_ENC);
-
-  const loginBtn = document.getElementById('loginBtn');
-  const input = document.getElementById('adminCode');
-  const msg = document.getElementById('msg');
-  const loginBox = document.getElementById('loginBox');
-  const contentBox = document.getElementById('contentBox');
-  const adminExtras = document.getElementById('adminExtras');
-  const welcomeText = document.getElementById('welcomeText');
-  const roleTitle = document.getElementById('roleTitle');
-  const themeSelect = document.getElementById('themeSelect');
+  const KEY=23;
+  const ADMIN_ENC=[35,39,32,37];
+  const USER_ENC=[39,38,37,35];
+  function decode(a){return a.map(n=>String.fromCharCode(n^KEY)).join('');}
+  const adminCode=decode(ADMIN_ENC);
+  const userCode=decode(USER_ENC);
+  const loginBtn=document.getElementById("loginBtn");
+  const input=document.getElementById("adminCode");
+  const msg=document.getElementById("msg");
+  const loginBox=document.getElementById("loginBox");
+  const contentBox=document.getElementById("contentBox");
+  const adminExtras=document.getElementById("adminExtras");
+  const welcomeText=document.getElementById("welcomeText");
+  const roleTitle=document.getElementById("roleTitle");
+  const themeSelect=document.getElementById("themeSelect");
+  const colorSelectContainer=document.getElementById("colorSelectContainer");
+  const colorSelect=document.getElementById("colorSelect");
 
   function checkCode(){
-    const code = (input.value || "").trim();
-    if(!code){
-      msg.textContent = "Įveskite kodą.";
-      return;
-    }
-    if(code === adminCodeStr){
-      showAdmin();
-    } else if(code === userCodeStr){
-      showUser();
-    } else {
-      msg.textContent = "Neteisingas kodas.";
-    }
+    const code=input.value.trim();
+    if(code===adminCode){showAdmin();}
+    else if(code===userCode){showUser();}
+    else{msg.textContent="Neteisingas kodas.";}
   }
 
   function showAdmin(){
-    loginBox.classList.add('hidden');
-    loginBox.setAttribute('aria-hidden','true');
-    contentBox.classList.remove('hidden');
-    contentBox.setAttribute('aria-hidden','false');
-    adminExtras.classList.remove('hidden');
-    welcomeText.textContent = "Sveiki, administratori!";
-    roleTitle.textContent = "Administratoriaus prieiga";
-    msg.textContent = "";
-    themeSelect.addEventListener('change', e => setTheme(e.target.value));
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
+    adminExtras.classList.remove("hidden");
+    welcomeText.textContent="Sveiki, administratori!";
+    roleTitle.textContent="Administratoriaus prieiga";
+    themeSelect.addEventListener("change",e=>setTheme(e.target.value));
+    colorSelect.addEventListener("change",()=>setFabulousColor(colorSelect.value));
   }
 
   function showUser(){
-    loginBox.classList.add('hidden');
-    loginBox.setAttribute('aria-hidden','true');
-    contentBox.classList.remove('hidden');
-    contentBox.setAttribute('aria-hidden','false');
-    adminExtras.classList.add('hidden');
-    welcomeText.textContent = "Sveiki atvykę!";
-    roleTitle.textContent = "Pasaulinukai Lietuva";
-    msg.textContent = "";
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
+    adminExtras.classList.add("hidden");
+    welcomeText.textContent="Sveiki atvykę!";
+    roleTitle.textContent="Pasaulinukai Lietuva";
   }
 
   function setTheme(name){
-    const root = document.documentElement;
-    if(name === "liquid"){
-      root.style.setProperty('--bg1','#b9fbc0');
-      root.style.setProperty('--bg2','#a3d5ff');
-      root.style.setProperty('--accent1','#007aff');
-      root.style.setProperty('--accent2','#00c6ff');
-    } else if(name === "neon"){
-      root.style.setProperty('--bg1','#0f0f1f');
-      root.style.setProperty('--bg2','#001133');
-      root.style.setProperty('--accent1','#00ffff');
-      root.style.setProperty('--accent2','#0088ff');
-    } else if(name === "fab"){
-      root.style.setProperty('--bg1','#fff0f6');
-      root.style.setProperty('--bg2','#fcd2f0');
-      root.style.setProperty('--accent1','#ff007f');
-      root.style.setProperty('--accent2','#ff77ff');
+    const root=document.documentElement;
+    if(name==="liquid"){
+      colorSelectContainer.classList.add("hidden");
+      root.style.setProperty("--bg1","#b9fbc0");
+      root.style.setProperty("--bg2","#a3d5ff");
+      root.style.setProperty("--accent1","#007aff");
+      root.style.setProperty("--accent2","#00c6ff");
+    }
+    if(name==="neon"){
+      colorSelectContainer.classList.add("hidden");
+      root.style.setProperty("--bg1","#0f0f1f");
+      root.style.setProperty("--bg2","#001133");
+      root.style.setProperty("--accent1","#00ffff");
+      root.style.setProperty("--accent2","#0088ff");
+    }
+    if(name==="fab"){
+      colorSelectContainer.classList.remove("hidden");
+      setFabulousColor(colorSelect.value);
     }
   }
 
-  loginBtn.addEventListener('click', checkCode);
-  input.addEventListener('keydown', function(e){
-    if(e.key === 'Enter') checkCode();
-  });
+  function setFabulousColor(c){
+    const root=document.documentElement;
+    if(c==="blue"){
+      root.style.setProperty("--bg1","#c6e2ff");
+      root.style.setProperty("--bg2","#91cfff");
+      root.style.setProperty("--accent1","#007bff");
+      root.style.setProperty("--accent2","#33aaff");
+    } else if(c==="green"){
+      root.style.setProperty("--bg1","#d4ffda");
+      root.style.setProperty("--bg2","#a2f7b6");
+      root.style.setProperty("--accent1","#00b050");
+      root.style.setProperty("--accent2","#66ff99");
+    } else if(c==="red"){
+      root.style.setProperty("--bg1","#ffd6d6");
+      root.style.setProperty("--bg2","#ff9999");
+      root.style.setProperty("--accent1","#ff0033");
+      root.style.setProperty("--accent2","#ff6666");
+    } else {
+      root.style.setProperty("--bg1","#fff0f6");
+      root.style.setProperty("--bg2","#fcd2f0");
+      root.style.setProperty("--accent1","#ff007f");
+      root.style.setProperty("--accent2","#ff77ff");
+    }
+  }
 
-  window.addEventListener('load', ()=> {
-    setTimeout(()=>{ input.focus(); }, 400);
-  });
+  loginBtn.addEventListener("click",checkCode);
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")checkCode();});
 })();
 </script>
-
 </body>
 </html>
