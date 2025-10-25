@@ -108,7 +108,6 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
 </head>
 <body>
 
-<!-- Login Box -->
 <div class="glass" id="loginBox">
   <h1>Pasaulinukai Lietuva</h1>
   <p>Įveskite kodą:</p>
@@ -118,14 +117,12 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
   <p id="msg" style="color:red;margin-top:10px;"></p>
 </div>
 
-<!-- Content Box -->
 <div id="contentBox" class="hidden">
   <h1 id="roleTitle">Pasaulinukai</h1>
   <p id="welcomeText"></p>
 
-  <!-- Admin Theme Controls -->
   <div id="adminExtras" class="hidden">
-    <label for="themeSelect">Pasirinkite temą:</label><br>
+    <label for="themeSelect">Pasirinkite stilių:</label><br>
     <select id="themeSelect">
       <option value="liquid">Liquid Glass</option>
       <option value="basic">Basic</option>
@@ -133,7 +130,6 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
       <option value="fab">Fabulous</option>
     </select>
 
-    <!-- Color selector for Fabulous -->
     <div id="fabColorBox" class="hidden">
       <br>
       <label for="fabColorSelect">Pasirinkite spalvą:</label><br>
@@ -142,13 +138,14 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
         <option value="purple">Violetinė</option>
         <option value="red">Raudona</option>
         <option value="gold">Auksinė</option>
+        <option value="blue">Mėlyna</option>
+        <option value="green">Žalia</option>
       </select>
     </div>
   </div>
 
-  <!-- User Theme Controls -->
   <div id="userExtras" class="hidden">
-    <label for="userThemeSelect">Pasirinkite temą:</label><br>
+    <label for="userThemeSelect">Pasirinkite stilių:</label><br>
     <select id="userThemeSelect">
       <option value="basic">Basic</option>
       <option value="liquid">Liquid Glass</option>
@@ -281,6 +278,18 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
         root.style.setProperty("--bg2","#ffecb3");
         root.style.setProperty("--accent1","#ffb300");
         root.style.setProperty("--accent2","#ffd54f");
+      }
+      if(c==="blue"){
+        root.style.setProperty("--bg1","#e0f0ff");
+        root.style.setProperty("--bg2","#c2e0ff");
+        root.style.setProperty("--accent1","#0077ff");
+        root.style.setProperty("--accent2","#00cfff");
+      }
+      if(c==="green"){
+        root.style.setProperty("--bg1","#e0ffe0");
+        root.style.setProperty("--bg2","#c2ffc2");
+        root.style.setProperty("--accent1","#00aa00");
+        root.style.setProperty("--accent2","#00ff55");
       }
     }
   }
