@@ -14,14 +14,12 @@
   --glass-bg:rgba(255,255,255,0.25);
 }
 
-/* Animations */
 @keyframes popZoom {
   0% {transform:scale(0.6);opacity:0;}
   50% {transform:scale(1.2);opacity:1;}
   100% {transform:scale(1);}
 }
 
-/* Base styling */
 body {
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -35,7 +33,6 @@ body {
   transition:background 0.4s ease;
 }
 
-/* Glass box (for admin themes) */
 .glass {
   background:var(--glass-bg);
   border-radius:24px;
@@ -51,7 +48,6 @@ body {
   transition:all 0.4s ease;
 }
 
-/* Basic layout container (for normal users) */
 .basic-layout {
   width:100%;
   max-width:900px;
@@ -127,6 +123,7 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
   <h1 id="roleTitle">Pasaulinukai</h1>
   <p id="welcomeText"></p>
 
+  <!-- Admin Theme Controls -->
   <div id="adminExtras" class="hidden">
     <label for="themeSelect">Pasirinkite temą:</label><br>
     <select id="themeSelect">
@@ -135,8 +132,21 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
       <option value="neon">Neon Blue</option>
       <option value="fab">Fabulous</option>
     </select>
+
+    <!-- Color selector for Fabulous -->
+    <div id="fabColorBox" class="hidden">
+      <br>
+      <label for="fabColorSelect">Pasirinkite spalvą:</label><br>
+      <select id="fabColorSelect">
+        <option value="pink">Rožinė</option>
+        <option value="purple">Violetinė</option>
+        <option value="red">Raudona</option>
+        <option value="gold">Auksinė</option>
+      </select>
+    </div>
   </div>
 
+  <!-- User Theme Controls -->
   <div id="userExtras" class="hidden">
     <label for="userThemeSelect">Pasirinkite temą:</label><br>
     <select id="userThemeSelect">
@@ -172,6 +182,8 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
   const roleTitle=document.getElementById("roleTitle");
   const themeSelect=document.getElementById("themeSelect");
   const userThemeSelect=document.getElementById("userThemeSelect");
+  const fabColorBox=document.getElementById("fabColorBox");
+  const fabColorSelect=document.getElementById("fabColorSelect");
 
   document.getElementById("loginBtn").addEventListener("click",checkCode);
   document.getElementById("adminCode").addEventListener("keydown",e=>{
@@ -193,7 +205,11 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     welcomeText.textContent="Sveiki, administratori!";
     roleTitle.textContent="Administratoriaus prieiga";
     setTheme("liquid", true);
-    themeSelect.addEventListener("change",e=>setTheme(e.target.value,true));
+    themeSelect.addEventListener("change",e=>{
+      setTheme(e.target.value,true);
+      fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
+    });
+    fabColorSelect.addEventListener("change",()=>setTheme("fab",true));
   }
 
   function showUser(){
@@ -211,12 +227,10 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     const root=document.documentElement;
     const body=document.body;
 
-    // Reset layouts
     body.classList.remove("admin-layout","user-layout");
     contentBox.className="";
 
     if(name==="basic"){
-      // Basic site layout
       root.style.setProperty("--bg1","#f9f9f9");
       root.style.setProperty("--bg2","#ffffff");
       root.style.setProperty("--accent1","#0055aa");
@@ -225,13 +239,11 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
       body.style.alignItems="center";
       contentBox.classList.add("basic-layout");
     } else {
-      // Admin or special theme layout
       contentBox.classList.add("glass");
       body.style.justifyContent="center";
       body.style.alignItems="center";
     }
 
-    // Theme color styling
     if(name==="liquid"){
       root.style.setProperty("--bg1","#b9fbc0");
       root.style.setProperty("--bg2","#a3d5ff");
@@ -245,10 +257,31 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
       root.style.setProperty("--accent2","#0088ff");
     }
     if(name==="fab"){
-      root.style.setProperty("--bg1","#fff0f6");
-      root.style.setProperty("--bg2","#fcd2f0");
-      root.style.setProperty("--accent1","#ff007f");
-      root.style.setProperty("--accent2","#ff77ff");
+      const c=fabColorSelect.value||"pink";
+      if(c==="pink"){
+        root.style.setProperty("--bg1","#fff0f6");
+        root.style.setProperty("--bg2","#fcd2f0");
+        root.style.setProperty("--accent1","#ff007f");
+        root.style.setProperty("--accent2","#ff77ff");
+      }
+      if(c==="purple"){
+        root.style.setProperty("--bg1","#f3e8ff");
+        root.style.setProperty("--bg2","#d6bbfc");
+        root.style.setProperty("--accent1","#9b5de5");
+        root.style.setProperty("--accent2","#c77dff");
+      }
+      if(c==="red"){
+        root.style.setProperty("--bg1","#ffe0e0");
+        root.style.setProperty("--bg2","#ffc2c2");
+        root.style.setProperty("--accent1","#ff3b3b");
+        root.style.setProperty("--accent2","#ff7676");
+      }
+      if(c==="gold"){
+        root.style.setProperty("--bg1","#fff8e1");
+        root.style.setProperty("--bg2","#ffecb3");
+        root.style.setProperty("--accent1","#ffb300");
+        root.style.setProperty("--accent2","#ffd54f");
+      }
     }
   }
 })();
