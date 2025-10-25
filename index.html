@@ -3,43 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pasaulinukai Administratoriaus prieiga</title>
+<title>Pasaulinukai Lietuva</title>
 <style>
 :root {
   --accent1:#007aff;
   --accent2:#00c6ff;
-  --bg1:#b9fbc0;
-  --bg2:#a3d5ff;
+  --bg1:#f2f2f2;
+  --bg2:#ffffff;
   --text:#111;
   --glass-bg:rgba(255,255,255,0.25);
 }
 
+/* Animations */
 @keyframes popZoom {
-  0% { transform: scale(0.6); opacity:0; }
-  50% { transform: scale(1.2); opacity:1; }
-  70% { transform: scale(0.95); }
-  85% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {transform:scale(0.6);opacity:0;}
+  50% {transform:scale(1.2);opacity:1;}
+  100% {transform:scale(1);}
 }
 
-@keyframes lightOrbit {
-  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(280px); opacity:1; }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(280px); opacity:0; }
-}
-
+/* Base styling */
 body {
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
+  background:linear-gradient(var(--bg1),var(--bg2));
   color:var(--text);
   min-height:100vh;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
-  overflow-x:hidden;
+  transition:background 0.4s ease;
 }
 
+/* Glass box (for admin themes) */
 .glass {
   background:var(--glass-bg);
   border-radius:24px;
@@ -51,24 +47,25 @@ body {
   width:90%;
   max-width:600px;
   text-align:center;
+  animation:popZoom 1s forwards;
   transition:all 0.4s ease;
-  position: relative;
 }
 
-#loginBox { animation: popZoom 1s forwards; }
+/* Basic layout container (for normal users) */
+.basic-layout {
+  width:100%;
+  max-width:900px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+  animation:fadeIn 0.6s ease;
+}
 
-.orbit-light {
-  position: absolute;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background: rgba(255,255,255,0.5);
-  box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 20px rgba(0,0,0,0.15);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg) translateX(280px);
-  transform-origin: center -280px;
-  animation: lightOrbit 1.5s forwards;
+@keyframes fadeIn {
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:none;}
 }
 
 h1 {
@@ -77,87 +74,56 @@ h1 {
   background:linear-gradient(90deg,var(--accent1),var(--accent2));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  margin-bottom:15px;
 }
 
-input {
+input, select, button {
+  font-size:1rem;
+  border-radius:10px;
+  border:1px solid #ccc;
   padding:10px 14px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-  font-size:1.1rem;
-  text-align:center;
-  width:70%;
-  max-width:200px;
   margin-top:10px;
 }
 
 button {
-  cursor:pointer;
-  margin-top:14px;
   background:linear-gradient(90deg,var(--accent1),var(--accent2));
   color:#fff;
-  font-weight:600;
-  padding:10px 24px;
   border:none;
-  border-radius:12px;
-  transition:transform 0.2s ease,box-shadow 0.3s ease;
-  position:relative;
-  overflow:hidden;
+  cursor:pointer;
+  font-weight:600;
+  transition:transform 0.2s ease;
 }
-button:hover { transform:scale(1.05); }
-button:active::after {
-  content:'';
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:300%;
-  height:300%;
-  background:rgba(255,255,255,0.3);
-  transform:translate(-50%,-50%) scale(0);
-  border-radius:50%;
-  animation:ripple 0.5s linear;
-}
-@keyframes ripple {
-  to { transform:translate(-50%,-50%) scale(1); opacity:0; }
-}
+button:hover {transform:scale(1.05);}
+
+.hidden {display:none;}
 
 .warning {
-  margin:10px auto;
   background:rgba(255,255,255,0.3);
   border-radius:12px;
   padding:10px;
-  color:#222;
+  margin-top:20px;
   max-width:420px;
   border:1px solid rgba(255,255,255,0.3);
 }
 
-.contact { margin-top:20px;font-size:0.95rem; }
-footer { font-size:0.85rem;margin-top:10px;opacity:0.8; }
-.hidden { display:none; }
-
-select {
-  margin-top:10px;
-  padding:8px 12px;
-  border-radius:10px;
-  border:none;
-  background:#fff;
-  font-weight:600;
-}
+.contact {margin-top:20px;font-size:0.95rem;}
+footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
 </style>
 </head>
 <body>
 
+<!-- Login Box -->
 <div class="glass" id="loginBox">
-  <div class="orbit-light"></div>
   <h1>Pasaulinukai Lietuva</h1>
-  <p>Įveskite administratoriaus kodą:</p>
+  <p>Įveskite kodą:</p>
   <input type="password" id="adminCode" placeholder="****" maxlength="8">
   <br>
   <button id="loginBtn">Tęsti</button>
   <p id="msg" style="color:red;margin-top:10px;"></p>
 </div>
 
-<div class="glass hidden" id="contentBox">
+<!-- Content Box -->
+<div id="contentBox" class="hidden">
   <h1 id="roleTitle">Pasaulinukai</h1>
   <p id="welcomeText"></p>
 
@@ -165,24 +131,23 @@ select {
     <label for="themeSelect">Pasirinkite temą:</label><br>
     <select id="themeSelect">
       <option value="liquid">Liquid Glass</option>
+      <option value="basic">Basic</option>
       <option value="neon">Neon Blue</option>
       <option value="fab">Fabulous</option>
     </select>
-    <div id="colorSelectContainer" class="hidden">
-      <br><label for="colorSelect">Pasirinkite spalvą:</label><br>
-      <select id="colorSelect">
-        <option value="blue">Mėlyna</option>
-        <option value="green">Žalia</option>
-        <option value="red">Raudona</option>
-        <option value="pink">Rožinė</option>
-      </select>
-    </div>
+  </div>
+
+  <div id="userExtras" class="hidden">
+    <label for="userThemeSelect">Pasirinkite temą:</label><br>
+    <select id="userThemeSelect">
+      <option value="basic">Basic</option>
+      <option value="liquid">Liquid Glass</option>
+    </select>
   </div>
 
   <br>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header"
-     target="_blank" rel="noopener">
-     <button id="formBtn">Atidaryti „Google Forms“</button>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
+    <button id="formBtn">Atidaryti „Google Forms“</button>
   </a>
 
   <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
@@ -197,28 +162,26 @@ select {
 
 <script>
 (function(){
-  const KEY=23;
-  const ADMIN_ENC=[35,39,32,37];
-  const USER_ENC=[39,38,37,35];
-  function decode(a){return a.map(n=>String.fromCharCode(n^KEY)).join('');}
-  const adminCode=decode(ADMIN_ENC);
-  const userCode=decode(USER_ENC);
-  const loginBtn=document.getElementById("loginBtn");
-  const input=document.getElementById("adminCode");
-  const msg=document.getElementById("msg");
+  const a=atob("NDA3Mg=="),u=atob("MDEyNA==");
   const loginBox=document.getElementById("loginBox");
   const contentBox=document.getElementById("contentBox");
+  const msg=document.getElementById("msg");
   const adminExtras=document.getElementById("adminExtras");
+  const userExtras=document.getElementById("userExtras");
   const welcomeText=document.getElementById("welcomeText");
   const roleTitle=document.getElementById("roleTitle");
   const themeSelect=document.getElementById("themeSelect");
-  const colorSelectContainer=document.getElementById("colorSelectContainer");
-  const colorSelect=document.getElementById("colorSelect");
+  const userThemeSelect=document.getElementById("userThemeSelect");
+
+  document.getElementById("loginBtn").addEventListener("click",checkCode);
+  document.getElementById("adminCode").addEventListener("keydown",e=>{
+    if(e.key==="Enter")checkCode();
+  });
 
   function checkCode(){
-    const code=input.value.trim();
-    if(code===adminCode){showAdmin();}
-    else if(code===userCode){showUser();}
+    const code=document.getElementById("adminCode").value.trim();
+    if(code===a){showAdmin();}
+    else if(code===u){showUser();}
     else{msg.textContent="Neteisingas kodas.";}
   }
 
@@ -226,69 +189,68 @@ select {
     loginBox.classList.add("hidden");
     contentBox.classList.remove("hidden");
     adminExtras.classList.remove("hidden");
+    userExtras.classList.add("hidden");
     welcomeText.textContent="Sveiki, administratori!";
     roleTitle.textContent="Administratoriaus prieiga";
-    themeSelect.addEventListener("change",e=>setTheme(e.target.value));
-    colorSelect.addEventListener("change",()=>setFabulousColor(colorSelect.value));
+    setTheme("liquid", true);
+    themeSelect.addEventListener("change",e=>setTheme(e.target.value,true));
   }
 
   function showUser(){
     loginBox.classList.add("hidden");
     contentBox.classList.remove("hidden");
     adminExtras.classList.add("hidden");
+    userExtras.classList.remove("hidden");
     welcomeText.textContent="Sveiki atvykę!";
     roleTitle.textContent="Pasaulinukai Lietuva";
+    setTheme("basic", false);
+    userThemeSelect.addEventListener("change",e=>setTheme(e.target.value,false));
   }
 
-  function setTheme(name){
+  function setTheme(name,isAdmin){
     const root=document.documentElement;
+    const body=document.body;
+
+    // Reset layouts
+    body.classList.remove("admin-layout","user-layout");
+    contentBox.className="";
+
+    if(name==="basic"){
+      // Basic site layout
+      root.style.setProperty("--bg1","#f9f9f9");
+      root.style.setProperty("--bg2","#ffffff");
+      root.style.setProperty("--accent1","#0055aa");
+      root.style.setProperty("--accent2","#007aff");
+      body.style.justifyContent="flex-start";
+      body.style.alignItems="center";
+      contentBox.classList.add("basic-layout");
+    } else {
+      // Admin or special theme layout
+      contentBox.classList.add("glass");
+      body.style.justifyContent="center";
+      body.style.alignItems="center";
+    }
+
+    // Theme color styling
     if(name==="liquid"){
-      colorSelectContainer.classList.add("hidden");
       root.style.setProperty("--bg1","#b9fbc0");
       root.style.setProperty("--bg2","#a3d5ff");
       root.style.setProperty("--accent1","#007aff");
       root.style.setProperty("--accent2","#00c6ff");
     }
     if(name==="neon"){
-      colorSelectContainer.classList.add("hidden");
       root.style.setProperty("--bg1","#0f0f1f");
       root.style.setProperty("--bg2","#001133");
       root.style.setProperty("--accent1","#00ffff");
       root.style.setProperty("--accent2","#0088ff");
     }
     if(name==="fab"){
-      colorSelectContainer.classList.remove("hidden");
-      setFabulousColor(colorSelect.value);
-    }
-  }
-
-  function setFabulousColor(c){
-    const root=document.documentElement;
-    if(c==="blue"){
-      root.style.setProperty("--bg1","#c6e2ff");
-      root.style.setProperty("--bg2","#91cfff");
-      root.style.setProperty("--accent1","#007bff");
-      root.style.setProperty("--accent2","#33aaff");
-    } else if(c==="green"){
-      root.style.setProperty("--bg1","#d4ffda");
-      root.style.setProperty("--bg2","#a2f7b6");
-      root.style.setProperty("--accent1","#00b050");
-      root.style.setProperty("--accent2","#66ff99");
-    } else if(c==="red"){
-      root.style.setProperty("--bg1","#ffd6d6");
-      root.style.setProperty("--bg2","#ff9999");
-      root.style.setProperty("--accent1","#ff0033");
-      root.style.setProperty("--accent2","#ff6666");
-    } else {
       root.style.setProperty("--bg1","#fff0f6");
       root.style.setProperty("--bg2","#fcd2f0");
       root.style.setProperty("--accent1","#ff007f");
       root.style.setProperty("--accent2","#ff77ff");
     }
   }
-
-  loginBtn.addEventListener("click",checkCode);
-  input.addEventListener("keydown",e=>{if(e.key==="Enter")checkCode();});
 })();
 </script>
 </body>
