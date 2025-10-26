@@ -90,7 +90,6 @@ button {
   transition:transform 0.2s ease;
 }
 button:hover {transform:scale(1.05);}
-
 .hidden {display:none;}
 
 .warning {
@@ -101,7 +100,6 @@ button:hover {transform:scale(1.05);}
   max-width:420px;
   border:1px solid rgba(255,255,255,0.3);
 }
-
 .contact {margin-top:20px;font-size:0.95rem;}
 footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
 </style>
@@ -157,6 +155,16 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     <button id="formBtn">Atidaryti „Google Forms“</button>
   </a>
 
+  <!-- BUG REPORT BUTTON (no style change) -->
+  <div id="bugReportSection" class="hidden" style="margin-top:15px;">
+    <button id="bugReportBtn">Pranešti apie klaidą</button>
+    <div id="bugPrompt" class="hidden" style="margin-top:10px;">
+      <input type="password" id="bugCode" placeholder="Įveskite kodą">
+      <button id="bugSubmit">Tęsti</button>
+      <p id="bugMsg" style="color:red;margin-top:8px;"></p>
+    </div>
+  </div>
+
   <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
 
   <div class="contact">
@@ -182,6 +190,15 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
   const fabColorBox=document.getElementById("fabColorBox");
   const fabColorSelect=document.getElementById("fabColorSelect");
 
+  // bug report elements
+  const bugSection=document.getElementById("bugReportSection");
+  const bugBtn=document.getElementById("bugReportBtn");
+  const bugPrompt=document.getElementById("bugPrompt");
+  const bugCode=document.getElementById("bugCode");
+  const bugSubmit=document.getElementById("bugSubmit");
+  const bugMsg=document.getElementById("bugMsg");
+  const bugForm="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor";
+
   document.getElementById("loginBtn").addEventListener("click",checkCode);
   document.getElementById("adminCode").addEventListener("keydown",e=>{
     if(e.key==="Enter")checkCode();
@@ -202,6 +219,16 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     welcomeText.textContent="Sveiki, administratori!";
     roleTitle.textContent="Administratoriaus prieiga";
     setTheme("liquid", true);
+
+    // enable bug report
+    bugSection.classList.remove("hidden");
+    bugBtn.onclick=()=>{
+      bugPrompt.classList.remove("hidden");
+      bugCode.value="7234";
+      bugCode.disabled=true;
+      bugSubmit.onclick=()=>window.open(bugForm,"_blank");
+    };
+
     themeSelect.addEventListener("change",e=>{
       setTheme(e.target.value,true);
       fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
@@ -217,16 +244,29 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     welcomeText.textContent="Sveiki atvykę!";
     roleTitle.textContent="Pasaulinukai Lietuva";
     setTheme("basic", false);
+
+    // enable bug report for user
+    bugSection.classList.remove("hidden");
+    bugBtn.onclick=()=>{
+      bugPrompt.classList.toggle("hidden");
+      bugSubmit.onclick=()=>{
+        if(bugCode.value.trim()==="7234"){
+          window.open(bugForm,"_blank");
+          bugMsg.textContent="";
+        } else {
+          bugMsg.textContent="Neteisingas kodas.";
+        }
+      };
+    };
+
     userThemeSelect.addEventListener("change",e=>setTheme(e.target.value,false));
   }
 
   function setTheme(name,isAdmin){
     const root=document.documentElement;
     const body=document.body;
-
     body.classList.remove("admin-layout","user-layout");
     contentBox.className="";
-
     if(name==="basic"){
       root.style.setProperty("--bg1","#f9f9f9");
       root.style.setProperty("--bg2","#ffffff");
