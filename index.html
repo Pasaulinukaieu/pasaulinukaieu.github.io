@@ -8,8 +8,8 @@
 :root {
   --accent1:#007aff;
   --accent2:#00c6ff;
-  --bg1:#f2f2f2;
-  --bg2:#ffffff;
+  --bg1:#b9fbc0;
+  --bg2:#a3d5ff;
   --text:#111;
   --glass-bg:rgba(255,255,255,0.25);
 }
@@ -48,32 +48,19 @@ body {
   transition:all 0.4s ease;
 }
 
-.basic-layout {
-  width:100%;
-  max-width:900px;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:flex-start;
-  animation:fadeIn 0.6s ease;
+#debugLink {
+  position:fixed;
+  top:10px;
+  right:20px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  font-size:0.9rem;
+  z-index:1000;
 }
 
-@keyframes fadeIn {
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:none;}
-}
-
-h1 {
-  font-size:2rem;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:15px;
-}
-
-input, select, button {
+select, button {
   font-size:1rem;
   border-radius:10px;
   border:1px solid #ccc;
@@ -106,64 +93,37 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
 </head>
 <body>
 
-<div class="glass" id="loginBox">
-  <h1>Pasaulinukai Lietuva</h1>
-  <p>Įveskite kodą:</p>
-  <input type="password" id="adminCode" placeholder="****" maxlength="8">
-  <br>
-  <button id="loginBtn">Tęsti</button>
-  <p id="msg" style="color:red;margin-top:10px;"></p>
-</div>
+<a id="debugLink" href="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor" target="_blank">Klaidų pranešimas</a>
 
-<div id="contentBox" class="hidden">
-  <h1 id="roleTitle">Pasaulinukai</h1>
-  <p id="welcomeText"></p>
+<div class="glass">
+  <h1>Administratoriaus prieiga</h1>
+  <p>Sveiki, administratori!</p>
 
-  <div id="adminExtras" class="hidden">
-    <label for="themeSelect">Pasirinkite stilių:</label><br>
-    <select id="themeSelect">
-      <option value="liquid">Liquid Glass</option>
-      <option value="basic">Basic</option>
-      <option value="neon">Neon Blue</option>
-      <option value="fab">Fabulous</option>
-    </select>
+  <label for="themeSelect">Pasirinkite stilių:</label><br>
+  <select id="themeSelect">
+    <option value="liquid" selected>Liquid Glass</option>
+    <option value="basic">Basic</option>
+    <option value="neon">Neon Blue</option>
+    <option value="fab">Fabulous</option>
+  </select>
 
-    <div id="fabColorBox" class="hidden">
-      <br>
-      <label for="fabColorSelect">Pasirinkite spalvą:</label><br>
-      <select id="fabColorSelect">
-        <option value="pink">Rožinė</option>
-        <option value="purple">Violetinė</option>
-        <option value="red">Raudona</option>
-        <option value="gold">Auksinė</option>
-        <option value="blue">Mėlyna</option>
-        <option value="green">Žalia</option>
-      </select>
-    </div>
-  </div>
-
-  <div id="userExtras" class="hidden">
-    <label for="userThemeSelect">Pasirinkite stilių:</label><br>
-    <select id="userThemeSelect">
-      <option value="basic">Basic</option>
-      <option value="liquid">Liquid Glass</option>
+  <div id="fabColorBox" class="hidden">
+    <br>
+    <label for="fabColorSelect">Pasirinkite spalvą:</label><br>
+    <select id="fabColorSelect">
+      <option value="pink">Rožinė</option>
+      <option value="purple">Violetinė</option>
+      <option value="red">Raudona</option>
+      <option value="gold">Auksinė</option>
+      <option value="blue">Mėlyna</option>
+      <option value="green">Žalia</option>
     </select>
   </div>
 
   <br>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
-    <button id="formBtn">Atidaryti „Google Forms“</button>
+    <button>Atidaryti „Google Forms“</button>
   </a>
-
-  <!-- BUG REPORT BUTTON (no style change) -->
-  <div id="bugReportSection" class="hidden" style="margin-top:15px;">
-    <button id="bugReportBtn">Pranešti apie klaidą</button>
-    <div id="bugPrompt" class="hidden" style="margin-top:10px;">
-      <input type="password" id="bugCode" placeholder="Įveskite kodą">
-      <button id="bugSubmit">Tęsti</button>
-      <p id="bugMsg" style="color:red;margin-top:8px;"></p>
-    </div>
-  </div>
 
   <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
 
@@ -177,110 +137,27 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
 
 <script>
 (function(){
-  const a=atob("MDI1Ng=="),u=atob("MDEyNA==");
-  const loginBox=document.getElementById("loginBox");
-  const contentBox=document.getElementById("contentBox");
-  const msg=document.getElementById("msg");
-  const adminExtras=document.getElementById("adminExtras");
-  const userExtras=document.getElementById("userExtras");
-  const welcomeText=document.getElementById("welcomeText");
-  const roleTitle=document.getElementById("roleTitle");
   const themeSelect=document.getElementById("themeSelect");
-  const userThemeSelect=document.getElementById("userThemeSelect");
   const fabColorBox=document.getElementById("fabColorBox");
   const fabColorSelect=document.getElementById("fabColorSelect");
 
-  // bug report elements
-  const bugSection=document.getElementById("bugReportSection");
-  const bugBtn=document.getElementById("bugReportBtn");
-  const bugPrompt=document.getElementById("bugPrompt");
-  const bugCode=document.getElementById("bugCode");
-  const bugSubmit=document.getElementById("bugSubmit");
-  const bugMsg=document.getElementById("bugMsg");
-  const bugForm="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor";
+  // apply default Liquid Glass theme on load
+  window.addEventListener("load",()=>setTheme("liquid"));
 
-  document.getElementById("loginBtn").addEventListener("click",checkCode);
-  document.getElementById("adminCode").addEventListener("keydown",e=>{
-    if(e.key==="Enter")checkCode();
+  themeSelect.addEventListener("change",e=>{
+    setTheme(e.target.value);
+    fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
   });
+  fabColorSelect.addEventListener("change",()=>setTheme("fab"));
 
-  function checkCode(){
-    const code=document.getElementById("adminCode").value.trim();
-    if(code===a){showAdmin();}
-    else if(code===u){showUser();}
-    else{msg.textContent="Neteisingas kodas.";}
-  }
-
-  function showAdmin(){
-    loginBox.classList.add("hidden");
-    contentBox.classList.remove("hidden");
-    adminExtras.classList.remove("hidden");
-    userExtras.classList.add("hidden");
-    welcomeText.textContent="Sveiki, administratori!";
-    roleTitle.textContent="Administratoriaus prieiga";
-    setTheme("liquid", true);
-
-    // enable bug report
-    bugSection.classList.remove("hidden");
-    bugBtn.onclick=()=>{
-      bugPrompt.classList.remove("hidden");
-      bugCode.value="7234";
-      bugCode.disabled=true;
-      bugSubmit.onclick=()=>window.open(bugForm,"_blank");
-    };
-
-    themeSelect.addEventListener("change",e=>{
-      setTheme(e.target.value,true);
-      fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
-    });
-    fabColorSelect.addEventListener("change",()=>setTheme("fab",true));
-  }
-
-  function showUser(){
-    loginBox.classList.add("hidden");
-    contentBox.classList.remove("hidden");
-    adminExtras.classList.add("hidden");
-    userExtras.classList.remove("hidden");
-    welcomeText.textContent="Sveiki atvykę!";
-    roleTitle.textContent="Pasaulinukai Lietuva";
-    setTheme("basic", false);
-
-    // enable bug report for user
-    bugSection.classList.remove("hidden");
-    bugBtn.onclick=()=>{
-      bugPrompt.classList.toggle("hidden");
-      bugSubmit.onclick=()=>{
-        if(bugCode.value.trim()==="7234"){
-          window.open(bugForm,"_blank");
-          bugMsg.textContent="";
-        } else {
-          bugMsg.textContent="Neteisingas kodas.";
-        }
-      };
-    };
-
-    userThemeSelect.addEventListener("change",e=>setTheme(e.target.value,false));
-  }
-
-  function setTheme(name,isAdmin){
+  function setTheme(name){
     const root=document.documentElement;
-    const body=document.body;
-    body.classList.remove("admin-layout","user-layout");
-    contentBox.className="";
     if(name==="basic"){
       root.style.setProperty("--bg1","#f9f9f9");
       root.style.setProperty("--bg2","#ffffff");
       root.style.setProperty("--accent1","#0055aa");
       root.style.setProperty("--accent2","#007aff");
-      body.style.justifyContent="flex-start";
-      body.style.alignItems="center";
-      contentBox.classList.add("basic-layout");
-    } else {
-      contentBox.classList.add("glass");
-      body.style.justifyContent="center";
-      body.style.alignItems="center";
     }
-
     if(name==="liquid"){
       root.style.setProperty("--bg1","#b9fbc0");
       root.style.setProperty("--bg2","#a3d5ff");
@@ -295,44 +172,48 @@ footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
     }
     if(name==="fab"){
       const c=fabColorSelect.value||"pink";
-      if(c==="pink"){
-        root.style.setProperty("--bg1","#fff0f6");
-        root.style.setProperty("--bg2","#fcd2f0");
-        root.style.setProperty("--accent1","#ff007f");
-        root.style.setProperty("--accent2","#ff77ff");
-      }
-      if(c==="purple"){
-        root.style.setProperty("--bg1","#f3e8ff");
-        root.style.setProperty("--bg2","#d6bbfc");
-        root.style.setProperty("--accent1","#9b5de5");
-        root.style.setProperty("--accent2","#c77dff");
-      }
-      if(c==="red"){
-        root.style.setProperty("--bg1","#ffe0e0");
-        root.style.setProperty("--bg2","#ffc2c2");
-        root.style.setProperty("--accent1","#ff3b3b");
-        root.style.setProperty("--accent2","#ff7676");
-      }
-      if(c==="gold"){
-        root.style.setProperty("--bg1","#fff8e1");
-        root.style.setProperty("--bg2","#ffecb3");
-        root.style.setProperty("--accent1","#ffb300");
-        root.style.setProperty("--accent2","#ffd54f");
-      }
-      if(c==="blue"){
-        root.style.setProperty("--bg1","#e0f0ff");
-        root.style.setProperty("--bg2","#c2e0ff");
-        root.style.setProperty("--accent1","#0077ff");
-        root.style.setProperty("--accent2","#00cfff");
-      }
-      if(c==="green"){
-        root.style.setProperty("--bg1","#e0ffe0");
-        root.style.setProperty("--bg2","#c2ffc2");
-        root.style.setProperty("--accent1","#00aa00");
-        root.style.setProperty("--accent2","#00ff55");
-      }
+      const colors={
+        pink:["#fff0f6","#fcd2f0","#ff007f","#ff77ff"],
+        purple:["#f3e8ff","#d6bbfc","#9b5de5","#c77dff"],
+        red:["#ffe0e0","#ffc2c2","#ff3b3b","#ff7676"],
+        gold:["#fff8e1","#ffecb3","#ffb300","#ffd54f"],
+        blue:["#e0f0ff","#c2e0ff","#0077ff","#00cfff"],
+        green:["#e0ffe0","#c2ffc2","#00aa00","#00ff55"]
+      };
+      const [bg1,bg2,a1,a2]=colors[c];
+      root.style.setProperty("--bg1",bg1);
+      root.style.setProperty("--bg2",bg2);
+      root.style.setProperty("--accent1",a1);
+      root.style.setProperty("--accent2",a2);
     }
   }
+})();
+</script>
+
+<!-- Chatbase Assistant Embed -->
+<script>
+(function(){
+  if(!window.chatbase||window.chatbase("getState")!=="initialized"){
+    window.chatbase=(...args)=>{
+      if(!window.chatbase.q){window.chatbase.q=[]}
+      window.chatbase.q.push(args)
+    };
+    window.chatbase=new Proxy(window.chatbase,{
+      get(target,prop){
+        if(prop==="q"){return target.q}
+        return(...args)=>target(prop,...args)
+      }
+    })
+  }
+  const onLoad=function(){
+    const script=document.createElement("script");
+    script.src="https://www.chatbase.co/embed.min.js";
+    script.id="HV3mGhJiTS4MCH4OGl6Hq";
+    script.domain="www.chatbase.co";
+    document.body.appendChild(script)
+  };
+  if(document.readyState==="complete"){onLoad()}
+  else{window.addEventListener("load",onLoad)}
 })();
 </script>
 </body>
