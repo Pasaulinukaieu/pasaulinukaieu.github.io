@@ -4,218 +4,214 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pasaulinukai Lietuva</title>
+
 <style>
 :root {
-  --accent1:#007aff;
-  --accent2:#00c6ff;
-  --bg1:#b9fbc0;
-  --bg2:#a3d5ff;
-  --text:#111;
-  --glass-bg:rgba(255,255,255,0.25);
+    --accent1:#007aff;
+    --accent2:#00c6ff;
+    --bg1:#b9fbc0;
+    --bg2:#a3d5ff;
+    --text:#111;
+    --glass-bg:rgba(255,255,255,0.25);
 }
 
 @keyframes popZoom {
-  0% {transform:scale(0.6);opacity:0;}
-  50% {transform:scale(1.2);opacity:1;}
-  100% {transform:scale(1);}
+    0% {transform:scale(0.6);opacity:0;}
+    50% {transform:scale(1.2);opacity:1;}
+    100% {transform:scale(1);}
 }
 
 body {
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background:linear-gradient(var(--bg1),var(--bg2));
-  color:var(--text);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  transition:background 0.4s ease;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(var(--bg1),var(--bg2));
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:background 0.4s ease;
 }
 
 .glass {
-  background:var(--glass-bg);
-  border-radius:24px;
-  padding:40px;
-  backdrop-filter:blur(25px)saturate(180%);
-  -webkit-backdrop-filter:blur(25px)saturate(180%);
-  border:1px solid rgba(255,255,255,0.3);
-  box-shadow:0 12px 40px rgba(0,0,0,0.25);
-  width:90%;
-  max-width:600px;
-  text-align:center;
-  animation:popZoom 1s forwards;
-  transition:all 0.4s ease;
+    background:var(--glass-bg);
+    border-radius:24px;
+    padding:40px;
+    backdrop-filter:blur(25px)saturate(180%);
+    -webkit-backdrop-filter:blur(25px)saturate(180%);
+    border:1px solid rgba(255,255,255,0.3);
+    box-shadow:0 12px 40px rgba(0,0,0,0.25);
+    width:90%;
+    max-width:600px;
+    text-align:center;
+    animation:popZoom 1s forwards;
+    transition:all 0.4s ease;
 }
 
 #debugLink {
-  position:fixed;
-  top:10px;
-  right:20px;
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  text-decoration:none;
-  font-size:0.9rem;
-  z-index:1000;
+    position:fixed;
+    top:10px;
+    right:20px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:0.9rem;
+    z-index:1000;
 }
 
 select, button {
-  font-size:1rem;
-  border-radius:10px;
-  border:1px solid #ccc;
-  padding:10px 14px;
-  margin-top:10px;
+    font-size:1rem;
+    border-radius:10px;
+    border:1px solid #ccc;
+    padding:10px 14px;
+    margin-top:10px;
 }
 
 button {
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  color:#fff;
-  border:none;
-  cursor:pointer;
-  font-weight:600;
-  transition:transform 0.2s ease;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    transition:transform 0.2s ease;
 }
+
 button:hover {transform:scale(1.05);}
+
 .hidden {display:none;}
 
 .warning {
-  background:rgba(255,255,255,0.3);
-  border-radius:12px;
-  padding:10px;
-  margin-top:20px;
-  max-width:420px;
-  border:1px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.3);
+    border-radius:12px;
+    padding:10px;
+    margin-top:20px;
+    max-width:420px;
+    border:1px solid rgba(255,255,255,0.3);
 }
-.contact {margin-top:20px;font-size:0.95rem;}
-footer {font-size:0.85rem;margin-top:20px;opacity:0.7;}
+
+.contact {
+    margin-top:20px;
+    font-size:0.95rem;
+}
+
+footer {
+    font-size:0.85rem;
+    margin-top:20px;
+    opacity:0.7;
+}
 </style>
+
 </head>
 <body>
 
-<a id="debugLink" href="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor" target="_blank">Klaidų pranešimas</a>
+<a id="debugLink" href="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor" target="_blank">
+Klaidų pranešimas
+</a>
 
 <div class="glass">
-  <h1>Administratoriaus prieiga</h1>
-  <p>Sveiki, administratori!</p>
+<h1>Administratoriaus prieiga</h1>
+<p>Sveiki, administratori!</p>
 
-  <label for="themeSelect">Pasirinkite stilių:</label><br>
-  <select id="themeSelect">
+<label for="themeSelect">Pasirinkite stilių:</label><br>
+<select id="themeSelect">
     <option value="liquid" selected>Liquid Glass</option>
     <option value="basic">Basic</option>
     <option value="neon">Neon Blue</option>
     <option value="fab">Fabulous</option>
-  </select>
+</select>
 
-  <div id="fabColorBox" class="hidden">
+<div id="fabColorBox" class="hidden">
     <br>
     <label for="fabColorSelect">Pasirinkite spalvą:</label><br>
     <select id="fabColorSelect">
-      <option value="pink">Rožinė</option>
-      <option value="purple">Violetinė</option>
-      <option value="red">Raudona</option>
-      <option value="gold">Auksinė</option>
-      <option value="blue">Mėlyna</option>
-      <option value="green">Žalia</option>
+        <option value="pink">Rožinė</option>
+        <option value="purple">Violetinė</option>
+        <option value="red">Raudona</option>
+        <option value="gold">Auksinė</option>
+        <option value="blue">Mėlyna</option>
+        <option value="green">Žalia</option>
     </select>
-  </div>
+</div>
 
-  <br>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
-    <button>Atidaryti „Google Forms“</button>
-  </a>
+<br>
 
-  <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header" target="_blank" rel="noopener">
+<button>Atidaryti „Google Forms“</button>
+</a>
 
-  <div class="contact">
-    <p><strong>CEO:</strong> 0(608)79 821</p>
-    <p><strong>El. paštas:</strong> pasaulinukai@gmail.com</p>
-    <p><strong>Technologijos (CTO):</strong> —</p>
-  </div>
-  <footer>All rights reserved Pasaulinukai 2025</footer>
+<div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
+
+<div class="contact">
+<p><strong>CEO:</strong> 0(608)79 821</p>
+<p><strong>El. paštas:</strong> pasaulinukai@gmail.com</p>
+<p><strong>Technologijos (CTO):</strong> —</p>
+</div>
+
+<footer>All rights reserved Pasaulinukai 2025</footer>
 </div>
 
 <script>
 (function(){
-  const themeSelect=document.getElementById("themeSelect");
-  const fabColorBox=document.getElementById("fabColorBox");
-  const fabColorSelect=document.getElementById("fabColorSelect");
+    const themeSelect=document.getElementById("themeSelect");
+    const fabColorBox=document.getElementById("fabColorBox");
+    const fabColorSelect=document.getElementById("fabColorSelect");
 
-  window.addEventListener("load",()=>setTheme("liquid"));
+    window.addEventListener("load",()=>setTheme("liquid"));
 
-  themeSelect.addEventListener("change",e=>{
-    setTheme(e.target.value);
-    fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
-  });
-  fabColorSelect.addEventListener("change",()=>setTheme("fab"));
+    themeSelect.addEventListener("change",e=>{
+        setTheme(e.target.value);
+        fabColorBox.classList.toggle("hidden",e.target.value!=="fab");
+    });
 
-  function setTheme(name){
-    const root=document.documentElement;
-    if(name==="basic"){
-      root.style.setProperty("--bg1","#f9f9f9");
-      root.style.setProperty("--bg2","#ffffff");
-      root.style.setProperty("--accent1","#0055aa");
-      root.style.setProperty("--accent2","#007aff");
+    fabColorSelect.addEventListener("change",()=>setTheme("fab"));
+
+    function setTheme(name){
+        const root=document.documentElement;
+
+        if(name==="basic"){
+            root.style.setProperty("--bg1","#f9f9f9");
+            root.style.setProperty("--bg2","#ffffff");
+            root.style.setProperty("--accent1","#0055aa");
+            root.style.setProperty("--accent2","#007aff");
+        }
+
+        if(name==="liquid"){
+            root.style.setProperty("--bg1","#b9fbc0");
+            root.style.setProperty("--bg2","#a3d5ff");
+            root.style.setProperty("--accent1","#007aff");
+            root.style.setProperty("--accent2","#00c6ff");
+        }
+
+        if(name==="neon"){
+            root.style.setProperty("--bg1","#0f0f1f");
+            root.style.setProperty("--bg2","#001133");
+            root.style.setProperty("--accent1","#00ffff");
+            root.style.setProperty("--accent2","#0088ff");
+        }
+
+        if(name==="fab"){
+            const c=fabColorSelect.value||"pink";
+            const colors={
+                pink:["#fff0f6","#fcd2f0","#ff007f","#ff77ff"],
+                purple:["#f3e8ff","#d6bbfc","#9b5de5","#c77dff"],
+                red:["#ffe0e0","#ffc2c2","#ff3b3b","#ff7676"],
+                gold:["#fff8e1","#ffecb3","#ffb300","#ffd54f"],
+                blue:["#e0f0ff","#c2e0ff","#0077ff","#00cfff"],
+                green:["#e0ffe0","#c2ffc2","#00aa00","#00ff55"]
+            };
+            const [bg1,bg2,a1,a2]=colors[c];
+            root.style.setProperty("--bg1",bg1);
+            root.style.setProperty("--bg2",bg2);
+            root.style.setProperty("--accent1",a1);
+            root.style.setProperty("--accent2",a2);
+        }
     }
-    if(name==="liquid"){
-      root.style.setProperty("--bg1","#b9fbc0");
-      root.style.setProperty("--bg2","#a3d5ff");
-      root.style.setProperty("--accent1","#007aff");
-      root.style.setProperty("--accent2","#00c6ff");
-    }
-    if(name==="neon"){
-      root.style.setProperty("--bg1","#0f0f1f");
-      root.style.setProperty("--bg2","#001133");
-      root.style.setProperty("--accent1","#00ffff");
-      root.style.setProperty("--accent2","#0088ff");
-    }
-    if(name==="fab"){
-      const c=fabColorSelect.value||"pink";
-      const colors={
-        pink:["#fff0f6","#fcd2f0","#ff007f","#ff77ff"],
-        purple:["#f3e8ff","#d6bbfc","#9b5de5","#c77dff"],
-        red:["#ffe0e0","#ffc2c2","#ff3b3b","#ff7676"],
-        gold:["#fff8e1","#ffecb3","#ffb300","#ffd54f"],
-        blue:["#e0f0ff","#c2e0ff","#0077ff","#00cfff"],
-        green:["#e0ffe0","#c2ffc2","#00aa00","#00ff55"]
-      };
-      const [bg1,bg2,a1,a2]=colors[c];
-      root.style.setProperty("--bg1",bg1);
-      root.style.setProperty("--bg2",bg2);
-      root.style.setProperty("--accent1",a1);
-      root.style.setProperty("--accent2",a2);
-    }
-  }
 })();
 </script>
 
-<!-- Chatbase Assistant Embed -->
-<script>
-(function(){
-  if(!window.chatbase||window.chatbase("getState")!=="initialized"){
-    window.chatbase=(...args)=>{
-      if(!window.chatbase.q){window.chatbase.q=[]}
-      window.chatbase.q.push(args)
-    };
-    window.chatbase=new Proxy(window.chatbase,{
-      get(target,prop){
-        if(prop==="q"){return target.q}
-        return(...args)=>target(prop,...args)
-      }
-    })
-  }
-  const onLoad=function(){
-    const script=document.createElement("script");
-    script.src="https://www.chatbase.co/embed.min.js";
-    script.id="HV3mGhJiTS4MCH4OGl6Hq";
-    script.domain="www.chatbase.co";
-    document.body.appendChild(script)
-  };
-  if(document.readyState==="complete"){onLoad()}
-  else{window.addEventListener("load",onLoad)}
-})();
-</script>
-
+<!-- ✅ Tawk.to chat widget (ONLY chat assistant active) -->
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
