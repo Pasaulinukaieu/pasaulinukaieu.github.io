@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+<body>
+
+<h1>Admin</h1>
+
+<label>Theme:</label>
+<select id="themeSelect">
+  <option value="liquid">Liquid</option>
+  <option value="basic">Basic</option>
+  <option value="neon">Neon</option>
+  <option value="fab">Fabulous</option>
+</select>
+
+<div id="fabColorBox" style="display:none;">
+  <label>Fab color:</label>
+  <select id="fabColorSelect">
+    <option value="pink">Pink</option>
+    <option value="purple">Purple</option>
+    <option value="red">Red</option>
+    <option value="gold">Gold</option>
+    <option value="blue">Blue</option>
+    <option value="green">Green</option>
+  </select>
+</div>
+
+<br><br>
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSeSXqhfAI4mGfqAsmqDxWZZ6PimNVjhN1tgeo_fBjUA6UMjjg/viewform?usp=header">
+  <button>Open Google Form</button>
+</a>
+
+<p>CEO: 0(608)79 821</p>
+<p>Email: pasaulinukai@gmail.com</p>
+
+<script>
+var themeSelect=document.getElementById("themeSelect");
+var fabBox=document.getElementById("fabColorBox");
+var fabColor=document.getElementById("fabColorSelect");
+
+themeSelect.addEventListener("change",function(){
+  fabBox.style.display = this.value==="fab" ? "block" : "none";
+});
+
+fabColor.addEventListener("change",function(){
+  // no theme styling; only logic left
+});
+</script>
+
+</body>
+</html>
