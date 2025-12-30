@@ -28,10 +28,8 @@ body {
     color:var(--text);
     min-height:100vh;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    transition:background 0.4s ease;
 }
 
 .glass {
@@ -46,7 +44,6 @@ body {
     max-width:600px;
     text-align:center;
     animation:popZoom 1s forwards;
-    transition:all 0.4s ease;
 }
 
 #debugLink {
@@ -55,10 +52,8 @@ body {
     right:20px;
     color:white;
     font-weight:600;
-    cursor:pointer;
     text-decoration:none;
     font-size:0.9rem;
-    z-index:1000;
 }
 
 select, button {
@@ -75,7 +70,6 @@ button {
     border:none;
     cursor:pointer;
     font-weight:600;
-    transition:transform 0.2s ease;
 }
 
 button:hover {transform:scale(1.05);}
@@ -83,12 +77,18 @@ button:hover {transform:scale(1.05);}
 .hidden {display:none;}
 
 .warning {
-    background:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.4);
     border-radius:12px;
-    padding:10px;
+    padding:14px;
     margin-top:20px;
-    max-width:420px;
-    border:1px solid rgba(255,255,255,0.3);
+    border:1px solid rgba(255,255,255,0.4);
+}
+
+/* 🔒 BLURRED CEO NUMBER */
+.blurred {
+    filter:blur(6px);
+    user-select:none;
+    pointer-events:none;
 }
 
 .contact {
@@ -102,11 +102,11 @@ footer {
     opacity:0.7;
 }
 </style>
-
 </head>
+
 <body>
 
-<a id="debugLink" href="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor" target="_blank">
+<a id="debugLink" href="https://docs.google.com/forms/d/e/1FAIpQLScQdO4K3FIHBSYj8MFo-tEz1vro7XvOeYZ9XYo3ONUnra5l8w/viewform?usp=publish-editor" target="_blank" rel="noopener">
 Klaidų pranešimas
 </a>
 
@@ -114,7 +114,13 @@ Klaidų pranešimas
 <h1>Administratoriaus prieiga</h1>
 <p>Sveiki, administratori!</p>
 
-<label for="themeSelect">Pasirinkite stilių:</label><br>
+<div class="warning">
+🔔 <strong>Informuojame:</strong><br>
+Reguliarūs sistemos atnaujinimai ir techninė priežiūra laikinai sustabdyti.<br>
+Priežastis – atostogos.
+</div>
+
+<label for="themeSelect"><br>Pasirinkite stilių:</label><br>
 <select id="themeSelect">
     <option value="liquid" selected>Liquid Glass</option>
     <option value="basic">Basic</option>
@@ -144,7 +150,9 @@ Klaidų pranešimas
 <div class="warning">⚠️ Tai tik prototipas — neprašvaistykite savo laiko.</div>
 
 <div class="contact">
-<p><strong>CEO:</strong> 0(608)79 821</p>
+<p><strong>CEO:</strong> <span class="blurred">0(608)79 821</span><br>
+<small>(Laikinai nepasiekiamas dėl atostogų)</small></p>
+
 <p><strong>El. paštas:</strong> pasaulinukai@gmail.com</p>
 <p><strong>Technologijos (CTO):</strong> —</p>
 </div>
@@ -211,8 +219,7 @@ Klaidų pranešimas
 })();
 </script>
 
-<!-- ✅ Tawk.to chat widget (ONLY chat assistant active) -->
-<!--Start of Tawk.to Script-->
+<!-- Tawk.to chat widget -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -224,7 +231,6 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script-->
 
 </body>
 </html>
